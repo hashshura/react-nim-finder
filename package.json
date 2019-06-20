@@ -2,10 +2,13 @@
   "name": "react-nim-finder",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://hashshura.github.io/react-nim-finder",
   "dependencies": {
     "@material-ui/core": "^4.1.1",
     "@material-ui/icons": "^4.2.0",
+    "gh-pages": "^2.0.1",
     "lodash": "^4.17.11",
+    "material-ui-flat-pagination": "^3.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
@@ -13,6 +16,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
