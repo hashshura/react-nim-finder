@@ -34,7 +34,7 @@ class Searcher extends React.Component {
   handleInputChange = event => {
     this.setState({
       query: event.target.value,
-      searchStatus: "Searching..."
+      payload: [{ name: "Searching..." }]
     });
     this.onChangeDebounced();
   };
@@ -45,9 +45,11 @@ class Searcher extends React.Component {
     getApiFunction(query, count, page, getToken()).then(response => {
       const isSearchSuccess = response.code >= K_CODE_SEARCH_SUCCESS_MINIMUM;
       this.setState({
-        payload: isSearchSuccess ? response.payload : [],
-        searchStatus:
-          response.code === K_CODE_SEARCH_SUCCESS_MINIMUM ? "Not found!" : ""
+        payload: isSearchSuccess
+          ? response.payload.length > K_CODE_SEARCH_SUCCESS_MINIMUM
+            ? response.payload
+            : [{ name: "Not found!" }]
+          : [{ name: response.status }]
       });
       setToken(isSearchSuccess ? getToken() : "");
     });
@@ -85,10 +87,7 @@ class Searcher extends React.Component {
         variant="outlined"
         margin="normal"
         fullWidth
-        id="id"
         label={label}
-        name="id"
-        autoComplete="id"
         autoFocus
         onChange={this.handleInputChange}
       />
@@ -97,13 +96,7 @@ class Searcher extends React.Component {
 
   render() {
     const { classes, getToken } = this.props;
-    const { payload, query, searchStatus } = this.state;
-
-    const rows = query
-      ? payload.length > 0
-        ? payload
-        : [{ name: searchStatus }]
-      : [];
+    const { payload } = this.state;
 
     return getToken() ? (
       <Container component="main" maxWidth="md">
@@ -126,7 +119,7 @@ class Searcher extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
+              {payload.map(row => (
                 <TableRow key={row.name}>
                   <TableCell component="th" scope="row">
                     {row.name}
