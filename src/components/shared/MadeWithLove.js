@@ -9,7 +9,11 @@ class MadeWithLove extends React.PureComponent {
     return (
       <Box mt={5}>
         <Typography variant="body2" color="textSecondary" align="center">
-          {"Made with love by Asif using "}
+          {"Made with love by "}
+          <Link color="inherit" href="http://ugm.id/asif">
+            Asif
+          </Link>
+          {" using "}
           <Link color="inherit" href="https://material-ui.com/">
             Material-UI
           </Link>

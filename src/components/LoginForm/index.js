@@ -21,7 +21,7 @@ import postApiLogin from "libs/postApiLogin";
 
 import {
   K_ROUTE_REGISTER,
-  K_ROUTE_BY_NAME,
+  K_ROUTE_SEARCH,
   K_CODE_LOGIN_SUCCESS
 } from "utils/constants";
 
@@ -132,7 +132,7 @@ class LoginForm extends React.Component {
     const { classes, getToken } = this.props;
 
     return getToken() ? (
-      <Redirect to={K_ROUTE_BY_NAME} />
+      <Redirect to={K_ROUTE_SEARCH} />
     ) : (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
