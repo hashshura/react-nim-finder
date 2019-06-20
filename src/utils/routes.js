@@ -2,7 +2,9 @@ import {
   K_ROUTE_REGISTER,
   K_ROUTE_LOGIN,
   K_ROUTE_BY_NAME,
-  K_ROUTE_BY_ID
+  K_ROUTE_BY_ID,
+  K_LABEL_BY_NAME,
+  K_LABEL_BY_ID
 } from "utils/constants";
 
 import LoginForm from "components/LoginForm";
@@ -29,7 +31,8 @@ const routes = [
     props: {
       routeOther: K_ROUTE_BY_ID,
       getApiFunction: getApiByName,
-      label: "Search by name"
+      label: K_LABEL_BY_NAME,
+      labelOther: K_LABEL_BY_ID
     }
   },
   {
@@ -38,7 +41,8 @@ const routes = [
     props: {
       routeOther: K_ROUTE_BY_NAME,
       getApiFunction: getApiById,
-      label: "Search by ID"
+      label: K_LABEL_BY_ID,
+      labelOther: K_LABEL_BY_NAME
     }
   }
 ];

@@ -20,3 +20,6 @@ export const K_CODE_LOGIN_MISSING_PARAMETER = -2;
 export const K_CODE_LOGIN_SUCCESS = 0;
 
 export const K_CODE_SEARCH_SUCCESS_MINIMUM = 0;
+
+export const K_LABEL_BY_NAME = 'Search by name';
+export const K_LABEL_BY_ID = 'Search by ID';
