@@ -1,10 +1,17 @@
+# react-nim-finder
+
+*__Author__: Asif Hummam Rais, 13517099*.<br>
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Installation and Running
 
-In the project directory, you can run:
+Assuming that you have `yarn` already installed on your PC, in the project directory, run:
 
-### `npm start`
+### `yarn install`
+
+Installs all required dependencies for the project.
+
+### `yarn start`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -12,57 +19,46 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### `npm test`
+## How to Use
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once you get into the page, using the app is quite straightforward.<br>
+Sign up for an account, log in, and type the name or ID of the person.
 
-### `npm run build`
+Screenshots are redundant (though the author might add them later), visit [ITB NIM Finder](https://hashshura.github.io/react-nim-finder) instead.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Build Design
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+As NIM Finder is a small application, global state controller such as `redux` is going to be overkill.<br>
+Instead, each state will be kept as React component state.
+- There is a single state, however, which will be persisted and manipulated globally: `token`. As such, `App.js` will hold the state and its setter and getter are passed to the children components via `props`. Persisting `token` is done by putting the data into `localStorage`.
+- Three main components are `LoginForm`, `RegisterForm`, and `Searcher`, where each component extends `React.Component` and acts as a page for a specific route (routed via `react-route`). Small component that is used together (i.e. `MadeWithLove`) extends `React.PureComponent` as it will render the same for identical `props` and `state`.
+- As the states other than `token` are only being utilized locally (by the components), they are kept as React states. Each state will be manipulated by its specific handler, and some of the state changes will call a callback function (e.g. `handleInputChange` with `setState` will have an `actionSearch` callback) as setting state is done asynchronously.
+- Main functionality: in `Searcher`, every change on the `TextField` will trigger an `onChangeDebounced` action with 300 ms onbounce delay. This will trigger a state change on `payload` to "Searching...", then call the API (`byname` if `isNan()`, as `isNan()` will return true for non-numeric strings and false for numeric strings).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Token State Behavior, URLs...
+- `/` (or any undefined route) will return search page if `token` state is set, or redirect to `/login` else.
+- `/login` will redirect to `/` if `token` state is set, or return login page else.
+- `/register` will redirect to `/` if `token` state is set, or return register page else.
+- Successful login will set the `token` state.
+- Unsuccessful API call with wrong `token` code and logout will unset the `token`.
 
-### `npm run eject`
+## Dependencies
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+You can look into `package.json` or see below information:
+- `"react": "^16.8.6"`
+- `"react-dom": "^16.8.6"`
+- `"react-router-dom": "^5.0.1"`
+- `"react-scripts": "3.0.1"`
+- Components from `@material-ui/core": "^4.1.1"`.
+- Icons from `"@material-ui/icons": "^4.2.0"`.
+- Github pages things from `"gh-pages": "^2.0.1"`.
+- Importing debounce function from`"lodash": "^4.17.11"`.
+- Pagination component from `"material-ui-flat-pagination": "^3.2.0"`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+All dependencies should be available via `yarn`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Appendix
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+As the author's time is not unlimited, the implementation of forms might not be the very best. `RegisterForm` and `LoginForm` are similar, they should be extending (or included by) a parent wrapper `Form`-like component.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+`@todo (Asif): I don't know, deadlines are near...`
