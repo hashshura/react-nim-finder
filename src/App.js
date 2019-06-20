@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 
 import routes from "utils/routes";
@@ -22,16 +22,16 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <div>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        >
+        <Switch>
           {routes.map((route, i) => (
             <Route
               key={i}
               path={route.path}
-              render={props => (
+              render={() => (
                 <route.component
                   key={i}
-                  {...route.props}
                   setToken={token => {
                     this.setToken(token);
                   }}
@@ -40,8 +40,8 @@ class App extends React.Component {
               )}
             />
           ))}
-        </div>
-      </Router>
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
