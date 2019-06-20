@@ -1,7 +1,7 @@
-import { K_API_BYID } from "utils/constants";
+import { K_API_BY_ID } from "utils/constants";
 
-export default function getApiByname(query, count, page, token) {
-  const url = new URL(K_API_BYID);
+export default function getApiById(query, count, page, token) {
+  const url = new URL(K_API_BY_ID);
   const params = { query, count: count, page: page };
 
   url.search = new URLSearchParams(params);
