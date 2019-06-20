@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react-nim-finder/static/css/main.2cce8147.chunk.css",
+    "main.js": "/react-nim-finder/static/js/main.e7a7534a.chunk.js",
+    "main.js.map": "/react-nim-finder/static/js/main.e7a7534a.chunk.js.map",
+    "runtime~main.js": "/react-nim-finder/static/js/runtime~main.bbf67bd6.js",
+    "runtime~main.js.map": "/react-nim-finder/static/js/runtime~main.bbf67bd6.js.map",
+    "static/js/2.4ea86682.chunk.js": "/react-nim-finder/static/js/2.4ea86682.chunk.js",
+    "static/js/2.4ea86682.chunk.js.map": "/react-nim-finder/static/js/2.4ea86682.chunk.js.map",
+    "index.html": "/react-nim-finder/index.html",
+    "precache-manifest.1cb0308c343a0e8386f428d9de77bc2b.js": "/react-nim-finder/precache-manifest.1cb0308c343a0e8386f428d9de77bc2b.js",
+    "service-worker.js": "/react-nim-finder/service-worker.js",
+    "static/css/main.2cce8147.chunk.css.map": "/react-nim-finder/static/css/main.2cce8147.chunk.css.map"
+  }
+}
