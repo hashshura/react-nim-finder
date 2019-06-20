@@ -36,8 +36,8 @@ class LoginForm extends React.Component {
     const { username, password } = this.state;
     postApiLogin(username, password).then(response => {
       const isLoginSuccess = response.code === K_CODE_LOGIN_SUCCESS;
-      setToken(isLoginSuccess ? response.token : "");
       this.setState({ helperText: isLoginSuccess ? "" : response.status });
+      setToken(isLoginSuccess ? response.token : "");
     });
   }
 
@@ -141,9 +141,7 @@ class LoginForm extends React.Component {
 
   render() {
     const { classes, getToken } = this.props;
-    const hasValidToken = getToken() !== "";
-    
-    return hasValidToken ? (
+    return getToken() ? (
       <Redirect to={K_ROUTE_BY_NAME} />
     ) : (
       <Container component="main" maxWidth="xs">

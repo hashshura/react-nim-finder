@@ -3,26 +3,39 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
 import routes from "utils/routes";
+import { K_LOCAL_STORAGE_TOKEN_ID } from "utils/constants";
 
 class App extends React.Component {
   state = {
-    token: ""
+    token: localStorage.getItem(K_LOCAL_STORAGE_TOKEN_ID)
   };
+
+  getToken() {
+    const { token } = this.state;
+    return token ? token : "";
+  }
+
+  setToken(token) {
+    this.setState({ token: token });
+    localStorage.setItem(K_LOCAL_STORAGE_TOKEN_ID, token);
+  }
 
   render() {
     return (
       <Router>
         <div>
-          {routes.map(route => (
+          {routes.map((route, i) => (
             <Route
+              key={i}
               path={route.path}
               render={props => (
                 <route.component
-                  {...props}
+                  key={i}
+                  {...route.props}
                   setToken={token => {
-                    this.setState({ token: token });
+                    this.setToken(token);
                   }}
-                  getToken={() => this.state.token}
+                  getToken={() => this.getToken()}
                 />
               )}
             />

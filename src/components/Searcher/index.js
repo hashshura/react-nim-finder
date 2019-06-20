@@ -17,13 +17,7 @@ import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
 
-import {
-  K_ROUTE_LOGIN,
-  K_ROUTE_BY_ID,
-  K_CODE_SEARCH_SUCCESS_MINIMUM
-} from "utils/constants";
-
-import getApiByName from "libs/getApiByName";
+import { K_ROUTE_LOGIN, K_CODE_SEARCH_SUCCESS_MINIMUM } from "utils/constants";
 
 class SearchByName extends React.Component {
   constructor() {
@@ -45,9 +39,9 @@ class SearchByName extends React.Component {
   };
 
   actionSearch() {
-    const { setToken, getToken } = this.props;
+    const { setToken, getToken, getApiFunction } = this.props;
     const { query, count, page } = this.state;
-    getApiByName(query, count, page, getToken()).then(response => {
+    getApiFunction(query, count, page, getToken()).then(response => {
       const isSearchSuccess = response.code >= K_CODE_SEARCH_SUCCESS_MINIMUM;
       setToken(isSearchSuccess ? getToken() : "");
       this.setState({ payload: isSearchSuccess ? response.payload : [] });
@@ -58,30 +52,32 @@ class SearchByName extends React.Component {
     this.actionSearch();
   };
 
-  renderNavBar = () => (
-    <Grid container>
-      <Grid item xs>
-        <Link
-          href="#"
-          onClick={() => {
-            setToken("");
-            console.log(getToken());
-          }}
-          variant="body2"
-        >
-          Logout
-        </Link>
+  renderNavBar() {
+    const { routeOther, setToken } = this.props;
+    return (
+      <Grid container>
+        <Grid item xs>
+          <Link
+            href="#"
+            onClick={() => {
+              setToken("");
+            }}
+            variant="body2"
+          >
+            Logout
+          </Link>
+        </Grid>
+        <Grid item>
+          <Link href={routeOther} variant="body2">
+            {"Don't have an account? Sign Up"}
+          </Link>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Link href={K_ROUTE_BY_ID} variant="body2">
-          {"Don't have an account? Sign Up"}
-        </Link>
-      </Grid>
-    </Grid>
-  );
+    );
+  }
 
   renderSearchField() {
-    const { classes } = this.props;
+    const { classes, label } = this.props;
     return (
       <TextField
         className={classes.searchField}
@@ -89,7 +85,7 @@ class SearchByName extends React.Component {
         margin="normal"
         fullWidth
         id="id"
-        label="Search by name"
+        label={label}
         name="id"
         autoComplete="id"
         autoFocus
@@ -104,7 +100,7 @@ class SearchByName extends React.Component {
   }
 
   render() {
-    const { classes, getToken, setToken } = this.props;
+    const { classes, getToken } = this.props;
     const { payload } = this.state;
 
     return getToken() ? (
@@ -151,7 +147,11 @@ class SearchByName extends React.Component {
 SearchByName.propTypes = {
   classes: PropTypes.object.isRequired,
   setToken: PropTypes.func.isRequired,
-  getToken: PropTypes.func.isRequired
+  getToken: PropTypes.func.isRequired,
+
+  routeOther: PropTypes.string.isRequired,
+  getApiFunction: PropTypes.string.isRequired,
+  label: PropTypes.string
 };
 
 export default withStyles(styles)(SearchByName);

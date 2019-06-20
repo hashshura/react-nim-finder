@@ -143,9 +143,8 @@ class RegisterForm extends React.Component {
 
   render() {
     const { classes, getToken } = this.props;
-    const hasValidToken = getToken() !== "";
     
-    return hasValidToken ? (
+    return getToken() ? (
       <Redirect to={K_ROUTE_BY_NAME} />
     ) : (
       <Container component="main" maxWidth="xs">
