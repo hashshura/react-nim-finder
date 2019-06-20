@@ -8,10 +8,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+
+import MadeWithLove from 'components/shared/MadeWithLove';
 
 import { withStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
@@ -33,6 +34,8 @@ class RegisterForm extends React.Component {
 
   handleSubmit() {
     const { username, password } = this.state;
+
+    this.setState({helperText: "Registering..."});
     postApiRegister(username, password).then(response => {
       const isRegisterSuccess = response.code === K_CODE_REGISTER_SUCCESS;
       this.setState({
@@ -79,7 +82,7 @@ class RegisterForm extends React.Component {
             this.setState({ username: event.target.value });
           }}
           onKeyPress={event => {
-            if (event.key === 'Enter') {
+            if (event.key === "Enter") {
               this.handleSubmit();
               event.preventDefault();
             }
@@ -99,7 +102,7 @@ class RegisterForm extends React.Component {
             this.setState({ password: event.target.value });
           }}
           onKeyPress={event => {
-            if (event.key === 'Enter') {
+            if (event.key === "Enter") {
               this.handleSubmit();
               event.preventDefault();
             }
@@ -127,23 +130,9 @@ class RegisterForm extends React.Component {
     );
   }
 
-  renderLove() {
-    return (
-      <Box mt={5}>
-        <Typography variant="body2" color="textSecondary" align="center">
-          {"Made with love by Asif using "}
-          <Link color="inherit" href="https://material-ui.com/">
-            Material-UI
-          </Link>
-          {" components."}
-        </Typography>
-      </Box>
-    );
-  }
-
   render() {
     const { classes, getToken } = this.props;
-    
+
     return getToken() ? (
       <Redirect to={K_ROUTE_BY_NAME} />
     ) : (
@@ -153,7 +142,7 @@ class RegisterForm extends React.Component {
           {this.renderTitle()}
           {this.renderForm()}
         </div>
-        {this.renderLove()}
+        <MadeWithLove />
       </Container>
     );
   }

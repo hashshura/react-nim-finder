@@ -8,10 +8,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+
+import MadeWithLove from 'components/shared/MadeWithLove';
 
 import { withStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
@@ -34,6 +35,8 @@ class LoginForm extends React.Component {
   handleSubmit() {
     const { setToken } = this.props;
     const { username, password } = this.state;
+
+    this.setState({helperText: "Logging in..."});
     postApiLogin(username, password).then(response => {
       const isLoginSuccess = response.code === K_CODE_LOGIN_SUCCESS;
       this.setState({ helperText: isLoginSuccess ? "" : response.status });
@@ -125,22 +128,9 @@ class LoginForm extends React.Component {
     );
   }
 
-  renderLove() {
-    return (
-      <Box mt={5}>
-        <Typography variant="body2" color="textSecondary" align="center">
-          {"Made with love by Asif using "}
-          <Link color="inherit" href="https://material-ui.com/">
-            Material-UI
-          </Link>
-          {" components."}
-        </Typography>
-      </Box>
-    );
-  }
-
   render() {
     const { classes, getToken } = this.props;
+
     return getToken() ? (
       <Redirect to={K_ROUTE_BY_NAME} />
     ) : (
@@ -150,7 +140,7 @@ class LoginForm extends React.Component {
           {this.renderTitle()}
           {this.renderForm()}
         </div>
-        {this.renderLove()}
+        <MadeWithLove />
       </Container>
     );
   }
