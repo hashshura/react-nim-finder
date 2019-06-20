@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router";
+import {Link} from "react-router-dom";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -119,7 +119,7 @@ class LoginForm extends React.Component {
         </Button>
         <Grid container direction="column" alignItems="center">
           <Grid item>
-            <Link href={K_ROUTE_REGISTER} variant="body2">
+            <Link to={K_ROUTE_REGISTER}>
               {"Haven't had an account yet? Register"}
             </Link>
           </Grid>

@@ -33,7 +33,7 @@ class Searcher extends React.Component {
     this.state = {
       query: "",
       count: 10,
-      page: 1,
+      page: 0,
       payload: [],
       offset: 0
     };
@@ -159,7 +159,7 @@ class Searcher extends React.Component {
             offset={this.state.offset}
             total={100}
             onClick={(e, offset, page) => {
-              this.handlePageChange(e, offset, page);
+              this.handlePageChange(e, offset, page - 1);
             }}
           />
         </Grid>

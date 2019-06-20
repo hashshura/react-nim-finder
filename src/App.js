@@ -23,7 +23,6 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        >
         <Switch>
           {routes.map((route, i) => (
             <Route
