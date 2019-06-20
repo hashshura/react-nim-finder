@@ -19,7 +19,7 @@ import { styles } from "./styles";
 
 import { K_ROUTE_LOGIN, K_CODE_SEARCH_SUCCESS_MINIMUM } from "utils/constants";
 
-class SearchByName extends React.Component {
+class Searcher extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -33,29 +33,30 @@ class SearchByName extends React.Component {
 
   handleInputChange = event => {
     this.setState({
-      query: event.target.value
+      query: event.target.value,
+      searchStatus: "Searching..."
     });
     this.onChangeDebounced();
   };
 
-  actionSearch() {
+  onChangeDebounced = () => {
     const { setToken, getToken, getApiFunction } = this.props;
     const { query, count, page } = this.state;
     getApiFunction(query, count, page, getToken()).then(response => {
       const isSearchSuccess = response.code >= K_CODE_SEARCH_SUCCESS_MINIMUM;
+      this.setState({
+        payload: isSearchSuccess ? response.payload : [],
+        searchStatus:
+          response.code === K_CODE_SEARCH_SUCCESS_MINIMUM ? "Not found!" : ""
+      });
       setToken(isSearchSuccess ? getToken() : "");
-      this.setState({ payload: isSearchSuccess ? response.payload : [] });
     });
-  }
-
-  onChangeDebounced = () => {
-    this.actionSearch();
   };
 
   renderNavBar() {
-    const { routeOther, setToken } = this.props;
+    const { classes, routeOther, setToken, labelOther } = this.props;
     return (
-      <Grid container>
+      <Grid container className={classes.navBar}>
         <Grid item xs>
           <Link
             href="#"
@@ -69,7 +70,7 @@ class SearchByName extends React.Component {
         </Grid>
         <Grid item>
           <Link href={routeOther} variant="body2">
-            {"Don't have an account? Sign Up"}
+            {labelOther}
           </Link>
         </Grid>
       </Grid>
@@ -89,19 +90,20 @@ class SearchByName extends React.Component {
         name="id"
         autoComplete="id"
         autoFocus
-        onChange={event => {
-          this.setState({
-            query: event.target.value
-          });
-          this.onChangeDebounced();
-        }}
+        onChange={this.handleInputChange}
       />
     );
   }
 
   render() {
     const { classes, getToken } = this.props;
-    const { payload } = this.state;
+    const { payload, query, searchStatus } = this.state;
+
+    const rows = query
+      ? payload.length > 0
+        ? payload
+        : [{ name: searchStatus }]
+      : [];
 
     return getToken() ? (
       <Container component="main" maxWidth="md">
@@ -124,7 +126,7 @@ class SearchByName extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {payload.map(row => (
+              {rows.map(row => (
                 <TableRow key={row.name}>
                   <TableCell component="th" scope="row">
                     {row.name}
@@ -144,14 +146,22 @@ class SearchByName extends React.Component {
   }
 }
 
-SearchByName.propTypes = {
+Searcher.propTypes = {
   classes: PropTypes.object.isRequired,
   setToken: PropTypes.func.isRequired,
   getToken: PropTypes.func.isRequired,
 
-  routeOther: PropTypes.string.isRequired,
-  getApiFunction: PropTypes.string.isRequired,
-  label: PropTypes.string
+  routeOther: PropTypes.string,
+  getApiFunction: PropTypes.func,
+  label: PropTypes.string,
+  labelOther: PropTypes.string
 };
 
-export default withStyles(styles)(SearchByName);
+Searcher.defaultProps = {
+  routeOther: "",
+  getApiFunction: () => null,
+  label: "",
+  labelOther: ""
+};
+
+export default withStyles(styles)(Searcher);

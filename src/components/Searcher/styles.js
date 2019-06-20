@@ -9,5 +9,8 @@ export const styles = theme => ({
   },
   searchField: {
     marginTop: theme.spacing(5)
+  },
+  navBar: {
+    marginTop: theme.spacing(3)
   }
 });
