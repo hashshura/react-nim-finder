@@ -67,6 +67,7 @@ As the author's time is not unlimited, implementation of forms might not be the 
 - No return `code` documentation.
 - Return `code` is not standardized: on `/login`, `-2` stands for both wrong username/password combination, and on `/byname` and `/byid`, the `code` value itself means _returned payload count_.
 - No _result count_-like return data to be used in making the pagination, even though `page` param exists.
+- `page` should start from 1, not 0, to avoid confusion.
 
 ## Screenshots
 ![Login Page](https://user-images.githubusercontent.com/34375104/59910325-dd66e480-943b-11e9-8921-9b02c31cb196.png)
