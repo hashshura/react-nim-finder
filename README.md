@@ -1,7 +1,7 @@
 # react-nim-finder
 
-*__Author__: Asif Hummam Rais, 13517099*.<br>
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+*__Author__: Asif Hummam Rais, 13517099*<br>
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 
 ## Installation and Running
 
